@@ -2,170 +2,6 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Recettes Douces - Noa</title>
-  <style>
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: #f9f4f7;
-      color: #333;
-      margin: 0;
-      padding: 20px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      min-height: 100vh;
-    }
-    h1 {
-      color: #d87ca0;
-      margin-bottom: 10px;
-    }
-    #step-image {
-      width: 80vw;
-      max-width: 400px;
-      border-radius: 12px;
-      margin-bottom: 20px;
-      box-shadow: 0 4px 10px rgba(216, 124, 160, 0.4);
-    }
-    #step-text {
-      font-size: 1.4em;
-      margin-bottom: 20px;
-      min-height: 3em;
-      text-align: center;
-    }
-    .btn {
-      background-color: #d87ca0;
-      color: white;
-      border: none;
-      padding: 15px 30px;
-      margin: 5px;
-      border-radius: 10px;
-      font-size: 1.2em;
-      cursor: pointer;
-      box-shadow: 0 4px 6px rgba(216,124,160,0.5);
-      user-select: none;
-      transition: background-color 0.3s ease;
-    }
-    .btn:hover {
-      background-color: #c16289;
-    }
-    #btn-listen {
-      background-color: #8ecae6;
-    }
-    #btn-listen:hover {
-      background-color: #6ea9d7;
-    }
-    #welcome {
-      margin-bottom: 25px;
-      font-size: 1.5em;
-      color: #666;
-      text-align: center;
-    }
-    #nav-buttons {
-      margin-top: 10px;
-    }
-  </style>
-</head>
-<body>
-  <h1>Recettes Douces - Noa</h1>
-  <div id="welcome">Yo Noa ! Prêt(e) à cuisiner ? On va faire des crêpes ensemble, étape par étape.</div>
-  <img id="step-image" src="" alt="Image étape recette" />
-  <div id="step-text"></div>
-  <div id="nav-buttons">
-    <button class="btn" id="btn-prev">⬅️ Précédent</button>
-    <button class="btn" id="btn-listen">🔊 Écouter</button>
-    <button class="btn" id="btn-next">➡️ Suivant</button>
-  </div>
-
-  <script>
-    const steps = [
-      {
-        text: "Mélange 250g de farine avec 3 œufs dans un grand bol.",
-        img: "https://images.unsplash.com/photo-1551218808-94e220e084d2?auto=format&fit=crop&w=400&q=80"
-      },
-      {
-        text: "Ajoute 500ml de lait doucement en remuant pour éviter les grumeaux.",
-        img: "https://images.unsplash.com/photo-1505253210343-3e254ca65a6b?auto=format&fit=crop&w=400&q=80"
-      },
-      {
-        text: "Incorpore une pincée de sel et une cuillère à soupe de sucre.",
-        img: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=400&q=80"
-      },
-      {
-        text: "Laisse reposer la pâte pendant 30 minutes.",
-        img: "https://images.unsplash.com/photo-1490645935967-10de6ba17061?auto=format&fit=crop&w=400&q=80"
-      },
-      {
-        text: "Fais chauffer une poêle, verse une louche de pâte, et fais cuire la crêpe 1 minute de chaque côté.",
-        img: "https://images.unsplash.com/photo-1551218808-94e220e084d2?auto=format&fit=crop&w=400&q=80"
-      }
-    ];
-
-    let currentStep = 0;
-    const stepText = document.getElementById('step-text');
-    const stepImage = document.getElementById('step-image');
-    const btnPrev = document.getElementById('btn-prev');
-    const btnNext = document.getElementById('btn-next');
-    const btnListen = document.getElementById('btn-listen');
-
-    function updateStep() {
-      const step = steps[currentStep];
-      stepText.textContent = step.text;
-      stepImage.src = step.img;
-      stepImage.alt = `Image de l'étape ${currentStep + 1}`;
-      btnPrev.disabled = currentStep === 0;
-      btnNext.disabled = currentStep === steps.length - 1;
-    }
-
-    function speak(text) {
-      if (!window.speechSynthesis) {
-        alert("Désolé, la synthèse vocale n'est pas supportée sur ce navigateur.");
-        return;
-      }
-      window.speechSynthesis.cancel(); // stop any ongoing speech
-      const utterance = new SpeechSynthesisUtterance(text);
-      utterance.lang = 'fr-FR';
-      // Voix douce, féminine (en fonction du navigateur)
-      const voices = window.speechSynthesis.getVoices();
-      const voice = voices.find(v => v.lang === 'fr-FR' && v.name.toLowerCase().includes('female')) || voices[0];
-      if (voice) utterance.voice = voice;
-      utterance.rate = 0.9; // un peu plus lent pour mieux comprendre
-      window.speechSynthesis.speak(utterance);
-    }
-
-    btnPrev.addEventListener('click', () => {
-      if (currentStep > 0) {
-        currentStep--;
-        updateStep();
-        speak(steps[currentStep].text);
-      }
-    });
-
-    btnNext.addEventListener('click', () => {
-      if (currentStep < steps.length - 1) {
-        currentStep++;
-        updateStep();
-        speak(steps[currentStep].text);
-      }
-    });
-
-    btnListen.addEventListener('click', () => {
-      speak(steps[currentStep].text);
-    });
-
-    // Au chargement, afficher et lire la première étape
-    window.onload = () => {
-      updateStep();
-      speak("Yo Noa ! Prêt(e) à cuisiner ? On va faire des crêpes ensemble, étape par étape.");
-      speak(steps[currentStep].text);
-    };
-  </script>
-</body>
-</html>
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-  <meta charset="UTF-8" />
   <title>Recettes Douces – Noa</title>
   <style>
     body { font-family: Arial, sans-serif; padding: 20px; max-width: 600px; margin: auto; background: #fff8f0; }
@@ -181,7 +17,7 @@
   <div class="recipe">
     <h2>Crêpes faciles</h2>
     <p id="text1">
-      Mélanger 250g de farine, 3 œufs, 50cl de lait, 2 cuillères à soupe de sucre et une pincée de sel.
+      Mélanger 250 grammes de farine, 3 œufs, 50 centilitres de lait, 2 cuillères à soupe de sucre et une pincée de sel.
       Laisser reposer la pâte 30 minutes. Cuire dans une poêle chaude légèrement huilée.
     </p>
     <button onclick="speakText('text1')">Lire la recette</button>
@@ -197,12 +33,24 @@
   </div>
 
   <script>
+    let frenchVoice = null;
+
+    function loadVoices() {
+      const voices = window.speechSynthesis.getVoices();
+      frenchVoice = voices.find(voice => voice.lang.startsWith('fr'));
+    }
+
+    window.speechSynthesis.onvoiceschanged = loadVoices;
+
     function speakText(id) {
       const text = document.getElementById(id).textContent;
       const speech = new SpeechSynthesisUtterance(text);
-      speech.lang = 'fr-FR'; // Force la voix en français
-      speech.rate = 0.9;     // Vitesse un peu plus lente, plus facile à comprendre
-      window.speechSynthesis.cancel(); // Stoppe toute lecture en cours
+      if (frenchVoice) {
+        speech.voice = frenchVoice;
+      }
+      speech.lang = 'fr-FR';
+      speech.rate = 0.9;
+      window.speechSynthesis.cancel();
       window.speechSynthesis.speak(speech);
     }
   </script>
