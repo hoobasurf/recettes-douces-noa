@@ -2,57 +2,60 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
-  <title>Recettes Douces – Noa</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Recettes Douces - Noa</title>
   <style>
-    body { font-family: Arial, sans-serif; padding: 20px; max-width: 600px; margin: auto; background: #fff8f0; }
-    h1 { color: #d2691e; }
-    .recipe { margin-bottom: 30px; }
-    button { padding: 10px 15px; background: #d2691e; color: white; border: none; border-radius: 5px; cursor: pointer; }
-    button:hover { background: #b35612; }
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #fff0f5;
+      text-align: center;
+      padding: 2rem;
+    }
+    h1 {
+      color: #d63384;
+    }
+    textarea {
+      width: 90%;
+      height: 200px;
+      margin-top: 20px;
+      font-size: 18px;
+    }
+    button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 18px;
+      background-color: #ff69b4;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #e05297;
+    }
   </style>
 </head>
 <body>
-  <h1>Recettes Douces – Noa</h1>
-
-  <div class="recipe">
-    <h2>Crêpes faciles</h2>
-    <p id="text1">
-      Mélanger 250 grammes de farine, 3 œufs, 50 centilitres de lait, 2 cuillères à soupe de sucre et une pincée de sel.
-      Laisser reposer la pâte 30 minutes. Cuire dans une poêle chaude légèrement huilée.
-    </p>
-    <button onclick="speakText('text1')">Lire la recette</button>
-  </div>
-
-  <div class="recipe">
-    <h2>Compote de pommes</h2>
-    <p id="text2">
-      Éplucher 4 pommes, couper en morceaux. Mettre dans une casserole avec un peu d’eau.
-      Cuire à feu doux pendant 20 minutes puis mixer.
-    </p>
-    <button onclick="speakText('text2')">Lire la recette</button>
-  </div>
+  <h1>Bonjour Noa 🌸</h1>
+  <p>Écris ta recette ou ton message ici :</p>
+  <textarea id="texte"></textarea><br/>
+  <button onclick="lireTexte()">📣 Lire la recette</button>
 
   <script>
-    let frenchVoice = null;
-
-    function loadVoices() {
-      const voices = window.speechSynthesis.getVoices();
-      frenchVoice = voices.find(voice => voice.lang.startsWith('fr'));
-    }
-
-    window.speechSynthesis.onvoiceschanged = loadVoices;
-
-    function speakText(id) {
-      const text = document.getElementById(id).textContent;
-      const speech = new SpeechSynthesisUtterance(text);
-      if (frenchVoice) {
-        speech.voice = frenchVoice;
+    function lireTexte() {
+      const texte = document.getElementById("texte").value;
+      const synthese = window.speechSynthesis;
+      const utterance = new SpeechSynthesisUtterance(texte);
+      const voixFr = synthese.getVoices().find(v => v.lang.startsWith("fr"));
+      if (voixFr) {
+        utterance.voice = voixFr;
       }
-      speech.lang = 'fr-FR';
-      speech.rate = 0.9;
-      window.speechSynthesis.cancel();
-      window.speechSynthesis.speak(speech);
+      utterance.lang = "fr-FR";
+      synthese.speak(utterance);
     }
+
+    // Précharger les voix au démarrage
+    window.speechSynthesis.onvoiceschanged = () => {};
   </script>
 </body>
 </html>
