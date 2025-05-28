@@ -162,3 +162,49 @@
   </script>
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Recettes Douces – Noa</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; max-width: 600px; margin: auto; background: #fff8f0; }
+    h1 { color: #d2691e; }
+    .recipe { margin-bottom: 30px; }
+    button { padding: 10px 15px; background: #d2691e; color: white; border: none; border-radius: 5px; cursor: pointer; }
+    button:hover { background: #b35612; }
+  </style>
+</head>
+<body>
+  <h1>Recettes Douces – Noa</h1>
+
+  <div class="recipe">
+    <h2>Crêpes faciles</h2>
+    <p id="text1">
+      Mélanger 250g de farine, 3 œufs, 50cl de lait, 2 cuillères à soupe de sucre et une pincée de sel.
+      Laisser reposer la pâte 30 minutes. Cuire dans une poêle chaude légèrement huilée.
+    </p>
+    <button onclick="speakText('text1')">Lire la recette</button>
+  </div>
+
+  <div class="recipe">
+    <h2>Compote de pommes</h2>
+    <p id="text2">
+      Éplucher 4 pommes, couper en morceaux. Mettre dans une casserole avec un peu d’eau.
+      Cuire à feu doux pendant 20 minutes puis mixer.
+    </p>
+    <button onclick="speakText('text2')">Lire la recette</button>
+  </div>
+
+  <script>
+    function speakText(id) {
+      const text = document.getElementById(id).textContent;
+      const speech = new SpeechSynthesisUtterance(text);
+      speech.lang = 'fr-FR'; // Force la voix en français
+      speech.rate = 0.9;     // Vitesse un peu plus lente, plus facile à comprendre
+      window.speechSynthesis.cancel(); // Stoppe toute lecture en cours
+      window.speechSynthesis.speak(speech);
+    }
+  </script>
+</body>
+</html>
